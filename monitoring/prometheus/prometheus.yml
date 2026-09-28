@@ -1,0 +1,36 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+
+  # ==========================================================
+  # PROMETHEUS SELF MONITORING
+  # ==========================================================
+
+  - job_name: "prometheus"
+
+    static_configs:
+      - targets:
+          - "prometheus:9090"
+
+
+  # ==========================================================
+  # NOC DEMO APPLICATION
+  # ==========================================================
+
+  - job_name: "noc-demo-app"
+
+    static_configs:
+      - targets:
+          - "host.docker.internal:8001"
+
+
+  # ==========================================================
+  # AI NOC AGENT
+  # ==========================================================
+
+  - job_name: "ai-noc-agent"
+
+    static_configs:
+      - targets:
+          - "host.docker.internal:8000"
