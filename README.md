@@ -137,9 +137,7 @@ Incident Recovered
 
 🧠 AI Investigation
 
-The project uses a locally running Ollama model for incident investigation.
-
-Model: llama3.2:3b
+The project uses AI for incident investigation.
 
 Before asking the AI to investigate an incident, the agent collects information from different sources.
 
@@ -386,9 +384,7 @@ noc_recovered_incidents
 noc_ai_investigations_completed
 noc_ai_investigations_failed
 
-Metrics endpoint:
-
-http://localhost:8000/metrics
+Metrics are exposed through the AI NOC Agent.
 
 Grafana
 
@@ -412,9 +408,7 @@ NOC Demo App Health
 
 Active Incidents
 
-Grafana:
-
-http://localhost:3000
+Grafana is used for the AI NOC monitoring dashboard.
 
 🧪 Incident Simulation
 
