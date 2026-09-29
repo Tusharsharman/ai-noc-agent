@@ -55,7 +55,7 @@ def test_real_environment_correlation():
     print("REAL ENVIRONMENT TEST COMPLETED")
     print("=" * 60)
 
-    return result
+    assert result is not None
 
 
 if __name__ == "__main__":
