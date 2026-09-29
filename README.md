@@ -1,86 +1,209 @@
 AI NOC Agent 🤖
 
-AI NOC Agent is an AI-powered Network Operations Center project that helps monitor application and infrastructure health, detect incidents, investigate problems, and manage the incident lifecycle.
+An AI-powered NOC (Network Operations Center) Agent that monitors application and infrastructure health, detects incidents, investigates them using AI, and manages the incident lifecycle through Slack and Jira.
 
-I built this project to understand how AI can be used in NOC and DevOps operations to reduce manual investigation work and bring monitoring, logs, Kubernetes, historical incidents, and operational runbooks into one workflow.
+I built this project to explore how AI can be used in day-to-day NOC and DevOps operations to reduce manual investigation effort and bring monitoring, logs, Kubernetes, historical incidents, and operational runbooks together.
+This project was built as a hands-on exploration of using AI for monitoring, incident investigation, and DevOps operations.<img width="1536" height="1024" alt="ChatGPT Image Sep 29, 2026, 04_39_35 PM" src="https://github.com/user-attachments/assets/835c063d-fab4-4be4-875c-4c962c4cf552" />
 
-What We Built
 
-The project monitors a demo application and infrastructure using Prometheus and Grafana. When an incident occurs, the agent collects available evidence such as metrics, application errors, logs, Kubernetes health, correlated signals, historical incidents, and relevant runbooks.
+🚀 Features
 
-The collected information is then used for AI-assisted incident investigation. The investigation provides observations, correlated signals, possible contributing factors, root-cause status, and read-only diagnostic recommendations.
+Real-time application and infrastructure monitoring
 
-The project also maintains incident information and connects the incident lifecycle with Slack and Jira. Slack is used for notifications and Jira is used for incident tracking and status updates.
+Automated incident detection
 
-What We Used
+Alert correlation
 
-Python
+AI-powered incident investigation
 
-FastAPI
+Kubernetes health investigation
 
-Prometheus
+Application log analysis
 
-Grafana
+Historical incident search
 
-Docker / Docker Compose
+RAG-based runbook retrieval
 
-Kubernetes / kubectl
+Slack incident notifications
 
-Ollama
+Jira incident management
 
-ChromaDB
+Automatic recovery detection
 
-RAG / operational runbooks
+Prometheus metrics
 
-Slack
+Grafana monitoring dashboard
 
-Jira
+Persistent incident history
 
-Git / GitHub
+Local LLM using Ollama
 
-Architecture
+🏗️ Architecture
 
-flowchart TD
-    A[Application / Infrastructure] --> B[Prometheus]
-    A --> C[Application Logs]
-    A --> D[Kubernetes]
+                    ┌─────────────────────────┐
+                    │ Application /           │
+                    │ Infrastructure          │
+                    └────────────┬────────────┘
+                                 │
+               ┌─────────────────┼─────────────────┐
+               │                 │                 │
+               ▼                 ▼                 ▼
+        ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
+        │ Prometheus  │   │ Application │   │ Kubernetes  │
+        │   Metrics   │   │    Logs     │   │   Cluster   │
+        └──────┬──────┘   └──────┬──────┘   └──────┬──────┘
+               │                 │                 │
+               └─────────────────┼─────────────────┘
+                                 ▼
+                    ┌─────────────────────────┐
+                    │      AI NOC Agent       │
+                    │         FastAPI         │
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │    Alert Correlation    │
+                    └────────────┬────────────┘
+                                 │
+                ┌────────────────┼────────────────┐
+                │                │                │
+                ▼                ▼                ▼
+        ┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+        │   Incident  │  │     RAG     │  │ Historical  │
+        │    Store    │  │  Runbooks   │  │  Incidents  │
+        └──────┬──────┘  └──────┬──────┘  └──────┬──────┘
+               │                │                │
+               └────────────────┼────────────────┘
+                                ▼
+                    ┌─────────────────────────┐
+                    │         Ollama          │
+                    │       llama3.2:3b       │
+                    └────────────┬────────────┘
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │   AI Investigation      │
+                    │        Report           │
+                    └────────────┬────────────┘
+                                 │
+                         ┌───────┴───────┐
+                         │               │
+                         ▼               ▼
+                  ┌─────────────┐ ┌─────────────┐
+                  │    Slack    │ │     Jira    │
+                  └─────────────┘ └─────────────┘
 
-    B --> E[AI NOC Agent]
-    C --> E
-    D --> E
+🔄 Incident Lifecycle
 
-    E --> F[Signal Correlation]
-    F --> G[Incident Store]
-    F --> H[RAG / Runbooks]
-    F --> I[Historical Incidents]
+Monitoring
+    │
+    ▼
+Signal Detection
+    │
+    ▼
+Alert Correlation
+    │
+    ▼
+Incident Created
+    │
+    ├──────────────► Slack Notification
+    │
+    ├──────────────► Jira Issue Created
+    │
+    ▼
+AI Investigation
+    │
+    ├── Prometheus Metrics
+    ├── Application Logs
+    ├── Kubernetes Health
+    ├── Historical Incidents
+    └── Runbook Retrieval
+    │
+    ▼
+Investigation Report
+    │
+    ▼
+Jira → In Progress
+    │
+    ▼
+Continuous Health Monitoring
+    │
+    ▼
+3 Consecutive Healthy Checks
+    │
+    ▼
+Incident Recovered
+    │
+    ├──────────────► Slack Recovery Notification
+    └──────────────► Jira → Done
 
-    G --> J[AI Investigation]
-    H --> J
-    I --> J
-    F --> J
+🧠 AI Investigation
 
-    J --> K[Slack]
-    J --> L[Jira]
+The project uses AI for incident investigation.
 
-How It Works
+Before asking the AI to investigate an incident, the agent collects information from different sources.
 
-The application and infrastructure provide monitoring information to the AI NOC Agent. Prometheus provides metrics, application logs provide error information, and Kubernetes provides pod, deployment, event, restart, and node health information.
+The AI can receive:
 
-The correlation engine combines related signals so that the AI receives a complete incident context instead of investigating each signal separately.
+CPU utilization
 
-The RAG layer searches operational runbooks, while historical incident information provides additional context from previous incidents.
+Memory utilization
 
-The AI then investigates the incident using the available evidence. The resulting incident information is stored and the workflow can update Slack and Jira.
+Application errors
 
-The project also supports incident recovery detection by continuously checking system health after an incident.
+Request metrics
 
-Incident Detection
+Request latency
 
-The project can identify conditions such as:
+Application error logs
 
-High CPU usage
+Kubernetes pod status
 
-High memory usage
+Kubernetes events
+
+Kubernetes restart information
+
+Deployment status
+
+Node pressure information
+
+Correlated signals
+
+Historical incidents
+
+Relevant runbooks
+
+The investigation report includes:
+
+Incident Summary
+
+Confirmed Observations
+
+Correlated Signals
+
+Historical Incident Patterns
+
+Runbook Guidance
+
+Possible Contributing Factors
+
+Root Cause Status
+
+Recommended Read-Only Diagnostic Next Steps
+
+Risk / Safety Note
+
+The AI is instructed to use the available evidence, avoid inventing facts, and clearly separate confirmed observations from possible contributing factors.
+
+🔗 Alert Correlation
+
+The correlation engine combines related signals before sending the investigation context to the AI.
+
+Currently supported signals include:
+
+High CPU
+
+High memory
 
 Application errors
 
@@ -94,7 +217,7 @@ Kubernetes CrashLoopBackOff
 
 High pod restarts
 
-Deployment availability issues
+Deployment unavailable
 
 Node MemoryPressure
 
@@ -102,117 +225,268 @@ Node DiskPressure
 
 Node PIDPressure
 
+Example:
+
+CPU High
+   +
+Memory High
+   +
+Application Error
+   +
+Kubernetes Image Pull Failure
+        │
+        ▼
+Correlated Incident
+        │
+        ▼
 AI Investigation
 
-The AI investigation uses information collected from the monitoring and incident-management components.
+This gives the investigation more context instead of looking at individual signals separately.
 
-It can use:
+☸️ Kubernetes Investigation
 
-CPU and memory usage
+The project uses kubectl to collect Kubernetes health information.
 
-Application errors
+The Kubernetes integration can check:
 
-Request metrics and latency
+Pod status
 
-Application error logs
+Deployment status
 
-Kubernetes health
+Pod restart counts
 
-Kubernetes events
+Pod descriptions
 
-Correlated signals
+Pod events
 
-Historical incidents
+Pod logs
 
-Relevant runbooks
+Node pressure
 
-The investigation is designed to work with available evidence and separate confirmed observations from possible contributing factors.
+For testing the NOC Agent, a deliberately broken pod was created:
 
-RAG and Historical Incidents
+noc-broken-pod
+      │
+      ▼
+ImagePullBackOff
+      │
+      ▼
+ErrImagePull
+      │
+      ▼
+Image manifest not found
 
-The project includes a RAG layer using ChromaDB for operational runbooks. This allows the agent to retrieve relevant troubleshooting information for an incident.
+The Kubernetes failure is collected as part of the incident evidence and passed to the AI investigation.
 
-Incident information is stored locally and can be searched for similar historical incidents. This gives the AI additional context when investigating a new incident.
+📚 RAG / Runbook Retrieval
 
-Slack and Jira
+The project includes a RAG layer for operational runbooks using ChromaDB.
 
-Slack is integrated for incident notifications and investigation updates.
+The flow is:
 
-Jira is integrated for incident tracking. The incident can be created and updated through its lifecycle, including recovery and completion.
+Incident Context
+      │
+      ▼
+Search Query
+      │
+      ▼
+ChromaDB
+      │
+      ▼
+Relevant Runbooks
+      │
+      ▼
+AI Investigation
 
-This connects technical investigation with the normal NOC incident-management workflow.
+This allows the investigation to use operational guidance along with live monitoring information.
 
-Monitoring
+Runbooks are maintained in:
 
-Prometheus is used for collecting application and AI NOC metrics.
+runbooks/
 
-Grafana is used to visualize monitoring information such as CPU, memory, errors, request metrics, application health, and active incidents.
+Examples include:
 
-Kubernetes
+application_http_500.md
+kubernetes_image_pull_backoff.md
 
-The project uses Kubernetes health information as part of incident investigation.
+🗂️ Incident History
 
-The agent can inspect pods, deployments, restart counts, pod descriptions, pod events, pod logs, and node pressure conditions.
+Incident information is persisted locally in:
 
-A deliberately broken Kubernetes pod was also used to test failure investigation, including ImagePullBackOff and ErrImagePull conditions.
+incidents/
 
-Incident Simulation
+Each incident can contain:
 
-The demo application includes an incident simulation that can generate high CPU and memory conditions.
+Incident ID
 
-Start an incident:
+Status
+
+Severity
+
+Detection timestamp
+
+Incident evidence
+
+AI investigation result
+
+Recovery information
+
+Jira issue key
+
+Historical incidents can also be searched and used as additional context during investigations.
+
+💬 Slack Integration
+
+Slack is used for incident notifications and investigation updates.
+
+The agent can send:
+
+Incident Detected
+        ↓
+Slack Notification
+        ↓
+AI Investigation Report
+        ↓
+Recovery Notification
+
+This gives the NOC team incident updates without having to continuously monitor the application manually.
+
+🎫 Jira Integration
+
+Jira is used to track the incident lifecycle.
+
+The current flow is:
+
+Incident Detected
+        ↓
+Jira Issue Created
+        ↓
+In Progress
+        ↓
+Incident Recovered
+        ↓
+Done
+
+The Jira issue key is also stored with the corresponding incident.
+
+📊 Monitoring
+
+Prometheus
+
+Prometheus collects metrics from the demo application and AI NOC Agent.
+
+The AI NOC Agent exposes metrics such as:
+
+noc_active_incidents
+noc_critical_incidents
+noc_high_incidents
+noc_warning_incidents
+noc_total_incidents
+noc_recovered_incidents
+noc_ai_investigations_completed
+noc_ai_investigations_failed
+
+Metrics are exposed through the AI NOC Agent.
+
+Grafana
+
+The project includes an AI NOC dashboard with:
+
+CPU Usage
+
+Memory Usage
+
+Application Errors
+
+P95 Request Latency
+
+Incident Mode
+
+Application Error Rate
+
+Request Rate
+
+NOC Demo App Health
+
+Active Incidents
+
+Grafana is used for the AI NOC monitoring dashboard.
+
+🧪 Incident Simulation
+
+The demo application can simulate a production-like incident.
+
+Start Incident
 
 curl -X POST http://localhost:8001/incident/start
 
-Stop an incident:
+The application enters incident mode and exposes high CPU and memory values.
+
+Stop Incident
 
 curl -X POST http://localhost:8001/incident/stop
 
-This makes it possible to test the monitoring and investigation workflow without depending on a real production failure.
+The NOC Agent then observes the return to healthy conditions.
 
-Current Project Status
+An incident is marked recovered after:
 
-The main working flow is complete and has been tested locally.
+3 consecutive healthy checks
 
-The current project includes:
+🛠️ Tech Stack
 
-Application and infrastructure monitoring
+Area
 
-Incident detection
+Technology
 
-Signal correlation
+Language
 
-AI-assisted investigation
+Python
 
-Kubernetes investigation
+API
 
-Application log analysis
+FastAPI
 
-RAG-based runbook retrieval
+AI
 
-Historical incident context
+Ollama / llama3.2:3b
 
-Slack notifications
+Monitoring
 
-Jira incident tracking
+Prometheus
 
-Incident recovery detection
+Visualization
 
-Prometheus metrics
+Grafana
 
-Grafana monitoring
+Containers
 
-Local AI inference
+Docker / Docker Compose
 
-Future Scope
+Orchestration
 
-The project can be extended further with human-approved automated remediation, more infrastructure and cloud integrations, more advanced alert correlation, additional operational runbooks, production Kubernetes deployment, authentication and authorization, and production-grade persistent storage.
+Kubernetes
 
-The current design keeps investigation separate from destructive remediation so that future remediation actions can remain under human approval.
+RAG
 
-Project Structure
+ChromaDB
 
+Incident Management
+
+Jira
+
+Notifications
+
+Slack
+
+Version Control
+
+Git / GitHub
+
+📁 Project Structure
+
+<pre>
 ai-noc-agent/
+│
 ├── agent/
 │   ├── main.py
 │   ├── agent.py
@@ -223,26 +497,289 @@ ai-noc-agent/
 │   ├── historical_intelligence.py
 │   ├── correlation.py
 │   └── llm.py
+│
 ├── tools/
 │   ├── prometheus.py
 │   ├── logs.py
 │   ├── kubernetes.py
 │   ├── slack.py
 │   └── jira.py
+│
 ├── demo_app/
+│   └── app.py
+│
 ├── rag/
+│   ├── ingest.py
+│   └── search.py
+│
 ├── runbooks/
 ├── incidents/
 ├── logs/
 ├── chroma_db/
+│
 ├── monitoring/
+│   └── prometheus/
+│       └── prometheus.yml
+│
 ├── tests/
 ├── docker-compose.yml
 ├── requirements.txt
 ├── .env
 └── README.md
+</pre>
 
-Author
+⚙️ Setup
+
+Prerequisites
+
+Make sure the following are installed:
+
+Python 3.12+
+
+Docker Desktop
+
+Docker Compose
+
+Kubernetes
+
+kubectl
+
+Ollama
+
+Git
+
+1. Clone the Repository
+
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd ai-noc-agent
+
+2. Create Virtual Environment
+
+python3 -m venv venv
+source venv/bin/activate
+
+3. Install Dependencies
+
+pip install -r requirements.txt
+
+4. Start Ollama
+
+Install Ollama and make sure it is running.
+
+Pull the model:
+
+ollama pull llama3.2:3b
+
+Verify:
+
+ollama list
+
+5. Start Prometheus and Grafana
+
+docker compose up -d
+
+Verify:
+
+docker ps
+
+6. Start the Demo Application
+
+uvicorn demo_app.app:app --host 0.0.0.0 --port 8001
+
+Demo application:
+
+http://localhost:8001
+
+7. Start the AI NOC Agent
+
+Open another terminal:
+
+cd ~/ai-noc-agent
+source venv/bin/activate
+uvicorn agent.main:app --host 0.0.0.0 --port 8000
+
+Check the agent:
+
+curl http://localhost:8000/health
+
+Expected:
+
+{
+  "status": "healthy"
+}
+
+🔌 API Endpoints
+
+Endpoint
+
+Description
+
+GET /health
+
+Check AI NOC Agent health
+
+GET /incidents
+
+Get all incidents
+
+GET /incidents/active
+
+Get active incidents
+
+GET /incidents/summary
+
+Get incident summary
+
+GET /incidents/{incident_id}
+
+Get a specific incident
+
+GET /incidents/similar/{incident_id}
+
+Find similar incidents
+
+GET /metrics
+
+Prometheus metrics
+
+🔥 End-to-End Demo
+
+Start the incident simulation:
+
+curl -X POST http://localhost:8001/incident/start
+
+The expected flow is:
+
+Incident Simulation
+        ↓
+Prometheus Metrics
+        ↓
+Incident Detection
+        ↓
+Alert Correlation
+        ↓
+Incident Created
+        ↓
+AI Investigation
+        ↓
+Slack Notification
+        ↓
+Jira Issue Created
+        ↓
+Jira → In Progress
+        ↓
+Health Monitoring
+        ↓
+3 Healthy Checks
+        ↓
+Incident Recovered
+        ↓
+Slack Recovery
+        ↓
+Jira → Done
+
+Stop the incident simulation:
+
+curl -X POST http://localhost:8001/incident/stop
+
+🔐 Safety Approach
+
+The current implementation follows an investigation-first approach.
+
+The AI can:
+
+Analyze monitoring data
+
+Analyze application logs
+
+Inspect Kubernetes health
+
+Correlate alerts
+
+Search historical incidents
+
+Retrieve runbook information
+
+Recommend read-only diagnostic steps
+
+The current implementation does not automatically execute destructive remediation actions.
+
+This keeps remediation under human control.
+
+📌 Example Incident
+
+A test incident generated by the project included:
+
+Severity: CRITICAL
+
+CPU: 95%
+Memory: 92%
+Incident Mode: 1
+
+The incident was correlated with multiple signals, including:
+
+CPU_HIGH
+MEMORY_HIGH
+INCIDENT_MODE
+KUBERNETES_IMAGE_PULL_FAILURE
+
+The AI investigation collected the available evidence and used historical incidents and relevant runbooks as additional context.
+
+The incident was then recovered after:
+
+3 / 3 healthy checks
+
+The corresponding Jira incident was moved through the incident lifecycle.
+
+🎯 What I Built / Learned
+
+Through this project I worked on:
+
+Python-based NOC automation
+
+FastAPI
+
+Prometheus monitoring
+
+Grafana dashboards
+
+Kubernetes troubleshooting
+
+Alert correlation
+
+Incident lifecycle management
+
+Local LLM integration
+
+RAG and runbook retrieval
+
+Slack integration
+
+Jira integration
+
+DevOps observability
+
+Human-in-the-loop AI design
+
+🔮 Future Improvements
+
+Possible future improvements include:
+
+Human-approved automated remediation
+
+Additional infrastructure integrations
+
+More advanced alert correlation
+
+More operational runbooks
+
+Production Kubernetes deployment
+
+Authentication and authorization
+
+Production-grade persistent storage
+
+👨‍💻 Author
 
 Tushar Sharma
 
