@@ -1,34 +1,43 @@
- AI NOC Agent 🤖
+AI NOC Agent 🤖
 
 An AI-powered NOC (Network Operations Center) Agent that monitors application and infrastructure health, detects incidents, investigates them using AI, and manages the incident lifecycle through Slack and Jira.
 
 I built this project to explore how AI can be used in day-to-day NOC and DevOps operations to reduce manual investigation effort and bring monitoring, logs, Kubernetes, historical incidents, and operational runbooks together.
 
----
+🚀 Features
 
-## 🚀 Features
+Real-time application and infrastructure monitoring
 
-- Real-time application and infrastructure monitoring
-- Automated incident detection
-- Alert correlation
-- AI-powered incident investigation
-- Kubernetes health investigation
-- Application log analysis
-- Historical incident search
-- RAG-based runbook retrieval
-- Slack incident notifications
-- Jira incident management
-- Automatic recovery detection
-- Prometheus metrics
-- Grafana monitoring dashboard
-- Persistent incident history
-- Local LLM using Ollama
+Automated incident detection
 
----
+Alert correlation
 
-## 🏗️ Architecture
+AI-powered incident investigation
 
-```text
+Kubernetes health investigation
+
+Application log analysis
+
+Historical incident search
+
+RAG-based runbook retrieval
+
+Slack incident notifications
+
+Jira incident management
+
+Automatic recovery detection
+
+Prometheus metrics
+
+Grafana monitoring dashboard
+
+Persistent incident history
+
+Local LLM using Ollama
+
+🏗️ Architecture
+
                     ┌─────────────────────────┐
                     │ Application /           │
                     │ Infrastructure          │
@@ -127,7 +136,7 @@ Incident Recovered
 
 🧠 AI Investigation
 
-The project uses a locally running Ollama model for incident investigation.
+The project uses a locally running Ollama model for incident investigation and combines live operational evidence with historical incidents and operational runbooks.
 
 Model: llama3.2:3b
 
@@ -181,6 +190,12 @@ Application errors
 Incident mode
 Kubernetes ImagePullBackOff
 Kubernetes ErrImagePull
+Kubernetes CrashLoopBackOff
+High pod restart counts
+Deployment availability issues
+Node MemoryPressure
+Node DiskPressure
+Node PIDPressure
 
 Example:
 
@@ -212,6 +227,7 @@ Pod restart counts
 Pod descriptions
 Pod events
 Pod logs
+Node resource pressure
 
 For testing the NOC Agent, a deliberately broken pod was created:
 
@@ -230,7 +246,7 @@ The Kubernetes failure is collected as part of the incident evidence and passed 
 
 📚 RAG / Runbook Retrieval
 
-The project includes a RAG layer for operational runbooks using ChromaDB.
+The project includes a RAG layer for operational runbooks using ChromaDB. Relevant runbooks are retrieved as additional evidence for AI-assisted incident investigation.
 
 The flow is:
 
@@ -306,7 +322,7 @@ The Jira issue key is also stored with the corresponding incident.
 📊 Monitoring
 Prometheus
 
-Prometheus collects metrics from the demo application and AI NOC Agent.
+Prometheus collects metrics from the demo application and AI NOC Agent. Prometheus is also used as the monitoring source for the incident-detection workflow.
 
 The AI NOC Agent exposes metrics such as:
 
@@ -521,7 +537,7 @@ Stop the incident simulation:
 curl -X POST http://localhost:8001/incident/stop
 🔐 Safety Approach
 
-The current implementation follows an investigation-first approach.
+The current implementation follows an investigation-first approach. The working project has been kept focused on detection, investigation, incident tracking, and operational visibility.
 
 The AI can:
 
