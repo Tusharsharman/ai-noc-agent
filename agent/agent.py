@@ -389,8 +389,14 @@ def investigate_incident(
 
     try:
         historical_results = find_similar_incidents(
-            health
+            severity=health.get("severity"),
+            cpu=health.get("cpu"),
+            memory=health.get("memory"),
+            incident_mode=health.get("incident_mode"),
+            exclude_incident_id=incident_id,
+            limit=5,
         )
+
     except Exception as exc:
         print(
             "Historical intelligence unavailable:"
@@ -410,6 +416,7 @@ def investigate_incident(
             query=rag_query,
             n_results=3,
         )
+
     except Exception as exc:
         print(
             "RAG search unavailable:"
