@@ -488,6 +488,7 @@ Git / GitHub
 
 📁 Project Structure
 
+<pre>
 ai-noc-agent/
 │
 ├── agent/
@@ -529,6 +530,7 @@ ai-noc-agent/
 ├── requirements.txt
 ├── .env
 └── README.md
+</pre>
 
 ⚙️ Setup
 
